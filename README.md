@@ -114,4 +114,4 @@ See also the list of [contributors](https://github.com/your/project/contributors
 * IPFS
 
 ## Sequence Diagram
-![Alt text](images\sequence_diagram.drawio.png?raw=true "Title")
+![Alt text](images/sequence_diagram.drawio.png?raw=true "Sequenc Diagram")
