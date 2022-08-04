@@ -71,6 +71,8 @@ Migrate smart contracts to the locally running blockchain, ganache-cli:
 ```
 truffle migrate
 ```
+or
+truffle migrate --reset
 
 Your terminal should look something like this:
 

@@ -1,6 +1,10 @@
 pragma solidity ^0.4.24;
+
+import "./../coffeeaccesscontrol/RetailerRole.sol";
+import "./../coffeeaccesscontrol/ConsumerRole.sol";
+
 // Define a contract 'Supplychain'
-contract SupplyChain {
+contract SupplyChain is RetailerRole, ConsumerRole {
 
   // Define 'owner'
   address owner;
@@ -64,19 +68,19 @@ contract SupplyChain {
 
   // Define a modifer that checks to see if msg.sender == owner of the contract
   modifier onlyOwner() {
-    require(msg.sender == owner);
+    require(msg.sender == owner, "Not owner");
     _;
   }
 
   // Define a modifer that verifies the Caller
   modifier verifyCaller (address _address) {
-    require(msg.sender == _address); 
+    require(msg.sender == _address, "Invalid caller address"); 
     _;
   }
 
   // Define a modifier that checks if the paid amount is sufficient to cover the price
   modifier paidEnough(uint _price) { 
-    require(msg.value >= _price); 
+    require(msg.value >= _price, "Not enough paid"); 
     _;
   }
   
@@ -90,49 +94,49 @@ contract SupplyChain {
 
   // Define a modifier that checks if an item.state of a upc is Harvested
   modifier harvested(uint _upc) {
-    require(items[_upc].itemState == State.Harvested);
+    require(items[_upc].itemState == State.Harvested, "Not Harvested State");
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is Processed
   modifier processed(uint _upc) {
-    require(items[_upc].itemState == State.Processed);
+    require(items[_upc].itemState == State.Processed, "Not Processed State");
     _;
   }
   
   // Define a modifier that checks if an item.state of a upc is Packed
   modifier packed(uint _upc) {
-    require(items[_upc].itemState == State.Packed);
+    require(items[_upc].itemState == State.Packed, "Not Packed State");
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is ForSale
   modifier forSale(uint _upc) {
-    require(items[_upc].itemState == State.ForSale);
+    require(items[_upc].itemState == State.ForSale, "Not ForSale State");
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is Sold
   modifier sold(uint _upc) {
-    require(items[_upc].itemState == State.Sold);
+    require(items[_upc].itemState == State.Sold, "Not Sold State");
     _;
   }
   
   // Define a modifier that checks if an item.state of a upc is Shipped
   modifier shipped(uint _upc) {
-    require(items[_upc].itemState == State.Shipped);
+    require(items[_upc].itemState == State.Shipped, "Not Shipped State");
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is Received
   modifier received(uint _upc) {
-    require(items[_upc].itemState == State.Received);
+    require(items[_upc].itemState == State.Received, "Not Received State");
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is Purchased
   modifier purchased(uint _upc) {
-    require(items[_upc].itemState == State.Purchased);
+    require(items[_upc].itemState == State.Purchased, "Not Purchased State");
     _;
   }
 
@@ -160,14 +164,14 @@ contract SupplyChain {
     Item memory item = Item(
       sku,
       _upc,
-      msg.sender,
+      _originFarmerID,
       _originFarmerID,
       _originFarmName,
       _originFarmInformation,
       _originFarmLatitude,
       _originFarmLongitude,
       //productID,
-      _upc,
+      sku, //productID
       _productNotes,
       0,
       State.Harvested,
@@ -265,25 +269,32 @@ contract SupplyChain {
     // Call modifier to check if upc has passed previous supply chain stage
     shipped(_upc)
     // Access Control List enforced by calling Smart Contract / DApp
-
+    onlyRetailer
     {
     // Update the appropriate fields - ownerID, retailerID, itemState
-    
+    items[_upc].ownerID = msg.sender;
+    items[_upc].itemState = State.Received;
+    items[_upc].retailerID = msg.sender;
+
     // Emit the appropriate event
-    
+    emit Received(upc);
   }
 
   // Define a function 'purchaseItem' that allows the consumer to mark an item 'Purchased'
   // Use the above modifiers to check if the item is received
   function purchaseItem(uint _upc) public 
     // Call modifier to check if upc has passed previous supply chain stage
-    
+    received(_upc)
     // Access Control List enforced by calling Smart Contract / DApp
+    onlyConsumer
     {
     // Update the appropriate fields - ownerID, consumerID, itemState
-    
+    items[_upc].ownerID = msg.sender;
+    items[_upc].itemState = State.Purchased;
+    items[_upc].consumerID = msg.sender;
+
     // Emit the appropriate event
-    
+    emit Purchased(_upc);
   }
 
   // Define a function 'fetchItemBufferOne' that fetches the data
