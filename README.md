@@ -121,3 +121,6 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 ## State Diagram
 ![Alt text](images/state_diagram.drawio.png?raw=true "State Diagram")
+
+## State Diagram
+![Alt text](images/class_diagram.drawio.png?raw=true "Class Diagram")
