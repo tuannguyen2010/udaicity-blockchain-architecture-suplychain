@@ -89,7 +89,7 @@ contract SupplyChain is RetailerRole, ConsumerRole {
     _;
     uint _price = items[_upc].productPrice;
     uint amountToReturn = msg.value - _price;
-    items[_upc].consumerID.transfer(amountToReturn);
+    msg.sender.transfer(amountToReturn);
   }
 
   // Define a modifier that checks if an item.state of a upc is Harvested

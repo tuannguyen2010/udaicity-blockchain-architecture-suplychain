@@ -113,6 +113,29 @@ See also the list of [contributors](https://github.com/your/project/contributors
 * Truffle
 * IPFS
 
+## CONTRACT ADDRESS
+FarmerRole: 0xeFbB8B7b2311C0a0B39851CB169963763Fbdf0bc
+
+DistributorRole:
+0x15AC0A04c3e3E9ed2b36695462d0c9B5B1c086eF
+
+RetailerRole:
+0x92f7b028FC64Dc6823857cBE2B4e006b6769Bc9A
+
+ConsumerRole:
+0x8fE7dBA5Ce459820F3aa3b8AF8Be025d2A6D9C20
+
+SupplyChain:
+0xB117DEb25aABc7c82fe4B9A40f9dE9A2DBE2c553
+
+## Program version numbers
+Truffle v5.5.24 (core: 5.5.24)
+Ganache v7.4.0
+Solidity - ^0.4.23 (solc-js)
+Node v16.16.0
+Web3.js v1.7.4
+
+
 ## Sequence Diagram
 ![Alt text](images/sequence_diagram.drawio.png?raw=true "Sequence Diagram")
 
