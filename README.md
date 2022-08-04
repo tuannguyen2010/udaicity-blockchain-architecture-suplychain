@@ -114,4 +114,10 @@ See also the list of [contributors](https://github.com/your/project/contributors
 * IPFS
 
 ## Sequence Diagram
-![Alt text](images/sequence_diagram.drawio.png?raw=true "Sequenc Diagram")
+![Alt text](images/sequence_diagram.drawio.png?raw=true "Sequence Diagram")
+
+## Acticity Diagram
+![Alt text](images/activity_diagram.drawio.png?raw=true "Activity Diagram")
+
+## State Diagram
+![Alt text](images/state_diagram.drawio.png?raw=true "State Diagram")
